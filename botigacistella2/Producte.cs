@@ -63,5 +63,15 @@ namespace botigacistella2
                 if(value>=0) quantitat = value;                
             }
         }
+
+        public double Preu()
+        {
+            return preu_sense_iva*iva/100+preu_sense_iva;
+        }
+
+        public override string ToString()
+        {
+            return $"Nom:  {Nom}, {Preu()} euros";
+        }
     }
 }
