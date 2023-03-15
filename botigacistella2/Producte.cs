@@ -62,5 +62,6 @@ namespace botigacistella2
             {
                 if(value>=0) quantitat = value;                
             }
+        }
     }
 }
