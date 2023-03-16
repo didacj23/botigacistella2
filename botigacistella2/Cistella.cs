@@ -74,6 +74,11 @@ namespace botigacistella2
             get { return data; }
         }
 
+        public string Botiga
+        {
+            get { return  b.nomBotiga; }
+        }
+
 
         //MÈTODES
         public void ComprarProducte(Producte producte, int quantitat)
