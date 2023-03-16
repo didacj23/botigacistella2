@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace botigacistella2
 {
@@ -68,8 +69,46 @@ namespace botigacistella2
             get { return NumElements; }
             set { NumElements = value; }
         }
+        //Propietats
 
         //Mètodes
+
+        private int EsapiLliure(Producte[] productes)
+        {
+            bool semafor = true;
+            for(int i = 0; i < productes.Length; i++)
+            {
+                if (productes[i] == null)
+                {
+                    return i;
+                }
+                
+            }
+
+            return -1;
+        }
+
+        public Producte this[string nom]
+        {
+            get
+            {
+         
+                for (int i = 0; i < NumElements; i++)
+                {
+                    
+                    if (productes[i] != null && productes[i].Nom == nom)
+                    {
+                        return productes[i];
+                    }
+                }
+
+                throw new ArgumentException("No s'ha trobat cap producte amb el nom " + nom);
+            }
+        }
+
+        private 
+
+
 
         //Mètodes
 
