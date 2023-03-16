@@ -8,11 +8,14 @@ namespace botigacistella2
 {
     internal class Producte
     {
+        //ATRIBUTS
         private string nom;
         private double preu_sense_iva;
         private double iva;
         private int quantitat;
 
+
+        //CONSTRUCTORS
         public Producte()
         {
             iva=21;
@@ -31,6 +34,8 @@ namespace botigacistella2
             this.quantitat = quantitat;
         }
 
+
+        //PROPIETATS
         public string Nom
         {
             get { return nom; }
@@ -64,6 +69,7 @@ namespace botigacistella2
             }
         }
 
+        //METODES
         public double Preu()
         {
             return preu_sense_iva*iva/100+preu_sense_iva;
