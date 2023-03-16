@@ -15,11 +15,30 @@ namespace botigacistella2
 
         //Constructors
 
+        public Botiga()
+        {
+            Productes = new Producte[10];
+            NumElements = 0;
+        }
 
+        
+        public Botiga(string nom, int nombreProductes)
+        {
+            NomBotiga = nom;
+            Productes = new Producte[nombreProductes];
+            NumElements = 0;
+        }
 
+        
+        public Botiga(string nom, Producte[] productes)
+        {
+            NomBotiga = nom;
+            Productes = productes;
+            NumElements = Productes != null
+    
         //Constructors
 
-        //Propietats
+            //Propietats
 
 
 
