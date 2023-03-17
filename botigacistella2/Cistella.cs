@@ -63,10 +63,10 @@ namespace botigacistella2
 
         public double Diners
         {
-            get { return diners;}
+            get { return diners-CostTotal();}
             set
             {
-                diners += value; //?descomptant elq ja hem comprat
+                diners += value;
             }
         }
         public DateTime Data
@@ -82,34 +82,130 @@ namespace botigacistella2
 
         //MÈTODES
         public void ComprarProducte(Producte producte, int quantitat)
-        {
-
-
-            
+        {            
+ 
             //comprovar que la botiga conté el producte
-            if(b.Contains(producte))
+            if(b.productes.Contains(producte))
             {
-
-                //comprovar espai a la cistella
-                if(productesCistella.Length>nElem && this.quantitat.Length>nElem)
+                
+                //mentres no tingui prous diners i en vulgui ingresar
+                char ingresar = 's';
+                while (diners < producte.Preu() * quantitat && ingresar == 's')
                 {
+                    Console.Write("Diners insuficients. Vols ingresar més diners (s/n)? ");
+                    ingresar = Convert.ToChar(Console.ReadLine());
 
-                    //comprovar diners suficients
-                    if(producte.Preu()*quantitat>=diners)
+                    if (ingresar == 's')
                     {
+                        Console.Write("Introdueix la quantitat de diners a ingresar: ");
+                        diners += Convert.ToDouble(Console.ReadLine());
+                    }
+                    else ingresar = 'n';
+                }
 
+                if (ingresar =='s' && diners >= producte.Preu() * quantitat) //si tens prous diners
+                {
+                    // no tinc espai a la cistella pero vull ampliar
+                    char ampliar = 's';
+                    while (productesCistella.Length <= nElem && ampliar == 's' || this.quantitat.Length <= nElem && ampliar == 's')
+                    {
+                        Console.Write("No tens espai a la cistella. La vols ampliar? (s/n)? ");
+                        ampliar = Convert.ToChar(Console.ReadLine());
+
+                        if (ampliar == 's')
+                        {
+                            Array.Resize(ref productesCistella, productesCistella.Length + 1);
+                            Array.Resize(ref this.quantitat, this.quantitat.Length + 1);
+                        }
+                        else ampliar = 'n';
+                    }
+
+                    //comprovar espai a la cistella
+                    if (ampliar=='s' && productesCistella.Length > nElem && this.quantitat.Length > nElem)
+                    {
                         //afegir el producte a la cistella
                         productesCistella[nElem] = producte;
                         this.quantitat[nElem] = quantitat;
                         nElem++;
+                        data = DateTime.Now;
                     }
 
                     
-                    
                 }
-            }
-            
 
+            }
+           
+        }
+
+        public void ComprarProducte(Producte[] producte, int[] quantitat)
+        {
+            bool c =true;
+            //comprovar que la botiga conté el producte
+            for(int i=0;i<producte.Length && c;i++)
+            {
+                if (!( b.Contains(producte[i]) )) c=false;
+            }
+
+
+            if (c)
+            {
+
+                //Calcular preu del array producte segons quantitat                
+                double preuProductesComprar=0;
+                for(int i=0; i<producte.Length; i++)
+                {
+                    preuProductesComprar += producte[i].Preu() * quantitat[i];
+                }
+                
+
+                //mentres no tingui prous diners i en vulgui ingresar
+                char ingresar = 's';
+                while (diners < preuProductesComprar && ingresar == 's')
+                {
+                    Console.Write("Diners insuficients. Vols ingresar més diners (s/n)? ");
+                    ingresar = Convert.ToChar(Console.ReadLine());
+
+                    if (ingresar == 's')
+                    {
+                        Console.Write("Introdueix la quantitat de diners a ingresar: ");
+                        diners += Convert.ToDouble(Console.ReadLine());
+                    }
+                    else ingresar = 'n';
+                }
+
+                if (ingresar == 's' && diners >= preuProductesComprar) //si tens prous diners
+                {
+                    // no tinc espai a la cistella pero vull ampliar
+                    char ampliar = 's';
+                    while (productesCistella.Length - nElem < producte.Length && ampliar == 's' || this.quantitat.Length - nElem < producte.Length && ampliar == 's')
+                    {
+                        Console.Write("No tens espai a la cistella. La vols ampliar? (s/n)? ");
+                        ampliar = Convert.ToChar(Console.ReadLine());
+
+                        if (ampliar == 's')
+                        {
+                            Array.Resize(ref productesCistella, productesCistella.Length + 1);
+                            Array.Resize(ref this.quantitat, this.quantitat.Length + 1);
+                        }
+                        else ampliar = 'n';
+                    }
+
+                    //comprovar espai a la cistella
+                    if (ampliar == 's' && productesCistella.Length-nElem>=producte.Length && this.quantitat.Length-nElem >= producte.Length)
+                    {
+                        //afegir el producte a la cistella
+                        for(int i = 0;i<producte.Length;i++)
+                        {
+                            productesCistella[nElem] = producte[i];
+                            this.quantitat[nElem] = quantitat[i];
+                            nElem++;
+                        }
+                        data = DateTime.Now;
+                        
+                    }
+                }
+                
+            }
 
         }
 
@@ -148,7 +244,6 @@ namespace botigacistella2
 
             return ticket;
         }
-
-
+                
     }
 }
