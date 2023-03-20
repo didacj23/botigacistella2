@@ -39,7 +39,7 @@ namespace botigacistella2
 
 
         //PROPIETATS
-        /*public Producte[] Productes //prou espai i prous diners per afegir el producte
+        public Producte[] Productes //prou espai i prous diners per afegir el producte
         {
             get { return productesCistella;}
             set //afegir un array de productes
@@ -54,7 +54,7 @@ namespace botigacistella2
                 //diners > (SUM(value[i]*quantitat[i]))
             }
         }
-        */
+        
 
         public int NElements
         {
@@ -207,6 +207,19 @@ namespace botigacistella2
                 
             }
 
+        }
+
+        public void OrdenarCistella()
+        {
+            for (int i = 0; i < nElem-1; i++)
+            {
+                if (productesCistella[i].Nom.CompareTo(productesCistella[i+1].Nom) >0)
+                {
+                    Producte aux = productesCistella[i];
+                    productesCistella[i] = productesCistella[i+1];
+                    productesCistella[i+1]=aux;
+                }
+            }
         }
 
         public void Mostra()
